@@ -7,3 +7,7 @@ Vítejte v kurzu zaměřeném na využití jazyka Python v oblasti průmyslové 
     - Nastavení vývojového prostředí (VS Code, Python interpreter)
 ## Použití
 Každá složka obsahuje materialy k dane lekci.
+## Materiály
+- **Python**: https://www.python.org/downloads/release/python-31210/ 
+- **VSCode**: https://code.visualstudio.com/ 
+- **Python in VSCode**: https://code.visualstudio.com/docs/languages/python 
