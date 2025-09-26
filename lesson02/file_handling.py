@@ -8,11 +8,11 @@ print(os.getcwd())  # prints the current working directory
 # 1. Writing to a file (creates if it doesn't exist, overwrites if it does)
 with open("example.txt", "w") as f:  # "w" = write mode
     f.write("Hello, world!\n")
-    f.write("Na druhém řádku zdravím všechny v češtině.\n")
+    f.write("Na druhém rádku zdravím vsechny v cestine.\n")
 
 # 2. Appending to a file (adds to the end without overwriting existing content)
 with open("example.txt", "a") as f:  # "a" = append mode
-    f.write("Tento řádek je přidán.\n")
+    f.write("Tento radek je pridan.\n")
 
 # 3. Reading the entire file at once
 with open("example.txt", "r") as f:  # "r" = read mode
