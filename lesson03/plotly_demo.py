@@ -5,6 +5,7 @@ import plotly.graph_objects as go
 PATH = "datasets/robot_imu_comparison/R1.csv"
 # Load the dataset
 dataset = pd.read_csv(PATH)
+# Rename columns for easier access
 dataset.rename(
     columns={
         r"Time": "time",
@@ -14,7 +15,10 @@ dataset.rename(
     },
     inplace=True,
 )
+
+# Create a 3D plotly figure
 fig = go.Figure()
+# Add the robot path as a blue line
 fig.add_trace(
     go.Scatter3d(
         x=dataset["pos_x"],
@@ -25,6 +29,7 @@ fig.add_trace(
         name="Path",
     )
 )
+# Add points colored by time along the path
 fig.add_trace(
     go.Scatter3d(
         x=dataset["pos_x"],
@@ -40,4 +45,5 @@ fig.add_trace(
         name="Points",
     )
 )
+# Show the interactive 3D plot
 fig.show()
