@@ -3,12 +3,10 @@
 # -------------------------------
 # This demo connects to a Modbus slave device and demonstrates:
 # - Reading counter values from input registers
-# - Reading button state from discrete inputs
-# - Controlling RGB LED via coils
-# - Automatic LED color cycling every 5 seconds
 #
 # Install pymodbus if needed:
 # pip install pymodbus
+# docs: https://pymodbus.readthedocs.io/en/latest/
 
 from pymodbus.client.serial import ModbusSerialClient
 from pymodbus.exceptions import ModbusException

@@ -9,6 +9,7 @@
 #
 # Install pymodbus if needed:
 # pip install pymodbus
+# docs: https://pymodbus.readthedocs.io/en/latest/
 
 from pymodbus.client.serial import ModbusSerialClient
 from pymodbus.exceptions import ModbusException

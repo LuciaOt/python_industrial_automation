@@ -3,6 +3,7 @@
 # -------------------------------
 # Install requests if needed:
 # pip install requests
+# docs: https://requests.readthedocs.io/en/latest/
 
 import requests
 
@@ -17,14 +18,13 @@ def main():
         # Check if request was successful (status code 200)
         if response.status_code == 200:
             # Return the IP address as text
-            return response.text.strip()
+            my_api = response.text.strip()
+            print(f"Your public IP: {my_api}")
         else:
             print(f"Error: HTTP {response.status_code}")
-            return None
 
     except requests.exceptions.RequestException as e:
         print(f"Request failed: {e}")
-        return None
 
 
 if __name__ == "__main__":
