@@ -17,6 +17,10 @@ for i in range(3):
         "humidity": 50 + i * 2,
     }
 
+    if i == 2:
+        # Test invalid data (missing 'id' field)
+        sensor_data.pop("id")
+
     # POST data to server
     response = requests.post(f"{SERVER_URL}/sensor", json=sensor_data)
     print(f"POST /sensor {response.status_code}: {response.text}")
@@ -25,8 +29,11 @@ for i in range(3):
 for i in range(3):
     sensor_id = f"sensor_{i}"
 
+    if i == 2:
+        # Test non-existing sensor ID
+        sensor_id = "sensor_999"
     # GET data from server by sensor ID
-    response = requests.get(f"{SERVER_URL}/sensor?id={sensor_id}")
+    response = requests.get(f"{SERVER_URL}/sensor/{sensor_id}")
 
     if response.status_code == 200:
         # Successfully retrieved data - parse JSON response

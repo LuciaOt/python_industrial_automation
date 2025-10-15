@@ -12,6 +12,13 @@ Vítejte v kurzu zaměřeném na využití jazyka Python v oblasti průmyslové 
     - Základy práce se soubory (čtení, zápis, mazání souborů)
     - Základy práce s CSV soubory
 
+3. **Vizualizace dat a práce s binárními soubory**
+    - Pokročilá práce s CSV soubory (lokalizace, čárka vs. tečka jako oddělovač)
+    - Parsování binárních souborů pomocí modulu `struct`
+    - Vizualizace dat pomocí knihoven `seaborn` a `plotly`
+    - Interaktivní grafy s dynamickým aktualizováním dat
+    - 3D vizualizace průmyslových dat (trajektorie robotů, senzorická data)
+
 ## Použití
 Každá složka obsahuje materialy k dane lekci.
 ## Materiály

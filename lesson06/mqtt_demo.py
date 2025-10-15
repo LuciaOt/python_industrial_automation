@@ -14,7 +14,7 @@ BROKER_HOST = "broker.hivemq.com"  # Public test broker (free MQTT broker for te
 BROKER_PORT = 1883  # Standard MQTT port (unencrypted)
 
 # Topic configuration - MQTT uses hierarchical topics separated by forward slashes
-BASE_TOPIC = "r_d/industrial-automation/"  # Root topic namespace
+BASE_TOPIC = "r_d/industrial-automation"  # Root topic namespace
 SENSOR_ID = "ondrejs-home"  # Unique identifier for this sensor/device
 TOPIC = f"{BASE_TOPIC}/demo/{SENSOR_ID}/sensor/temperature"  # Full topic path
 

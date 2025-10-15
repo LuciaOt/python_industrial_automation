@@ -59,12 +59,19 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             try:
                 data = json.loads(post_data)
                 sensor_id = data.get("id")
+                if not sensor_id:
+                    raise ValueError("Missing 'id' in data")
                 # Store sensor data in memory
                 sensor_data[sensor_id] = data
             except json.JSONDecodeError:
                 self.send_response(400)
                 self.end_headers()
                 self.wfile.write(b"Invalid JSON")
+                return
+            except ValueError as ve:
+                self.send_response(400)
+                self.end_headers()
+                self.wfile.write(str(ve).encode("utf-8"))
                 return
 
             print(f"Received sensor data: {data}")
