@@ -10,3 +10,5 @@ requests
 flask
 paho-mqtt
 asyncua
+dash_bootstrap_components
+dash
