@@ -1,83 +1,56 @@
 import requests
 import pandas as pd
 import matplotlib.pyplot as plt
-import json
 
-''' From NREL's official documentation I used these data https://developer.nrel.gov/docs/solar/pvwatts/v8/
-and used  DEMO_KEY
-'''
+# API endpoint URL
+url = "https://data.csu.gov.cz/api/dotaz/v1/data/vybery/CRUHVD1T2"
 
-base_url = "https://developer.nrel.gov/api/pvwatts/v8.json"
+# Send the request to the API
+try:
+    response = requests.get(url)
 
-# parameters chosen based on documentation - LA
-params = {
-    'api_key': 'DEMO_KEY',  
-    'lat': 34.0522,        
-    'lon': -118.2437,      
-    'system_capacity': 4,   
-    'azimuth': 180,         
-    'tilt': 20,             
-    'array_type': 1,        
-    'module_type': 1,       
-    'losses': 14            
-}
+    # Check if the response is successful (status code 200)
+    response.raise_for_status()
 
-'''Fetch data from API:
-    I decided to fetch column ac_monthly (the usable electricity that comes out of your solar system) and 
-    capacity factor (how much energy you ACTUALLY get vs. how much you could get if the system ran at full power 24/7 all year)'''
-print("Fetching data from NREL API...")
-response = requests.get(base_url, params=params)
-if response.status_code == 200:
+    # Parse the JSON response
     data = response.json()
-    print("Data fetched successfully!")
-    
-    ac_monthly = data['outputs']['ac_monthly']
-    
-    # Create a pandas DataFrame
-    df = pd.DataFrame({
-        'Month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-                  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        'AC_Output_kWh': ac_monthly
-    })
-    
-    print("\nDataFrame:")
-    print(df)
-    
-    annual_output = data['outputs']['ac_annual']
-    capacity_factor = data['outputs']['capacity_factor']
-    
 
-    
-    # Create visualizations
-    fig, axes = plt.subplots(2, 1, figsize=(12, 10))
-    
-    # Bar chart of monthly output
-    axes[0].bar(df['Month'], df['AC_Output_kWh'], color='skyblue', edgecolor='navy')
-    axes[0].set_xlabel('Month', fontsize=12)
-    axes[0].set_ylabel('AC Output (kWh)', fontsize=12)
-    axes[0].set_title('Monthly Solar Energy Production - Los Angeles', fontsize=14, fontweight='bold')
-    axes[0].grid(axis='y', alpha=0.3)
-    
-    # Add value labels on bars
-    for i, v in enumerate(df['AC_Output_kWh']):
-        axes[0].text(i, v + 10, f'{v:.0f}', ha='center', va='bottom', fontsize=9)
-    
-    # Line chart showing trend
-    axes[1].plot(df['Month'], df['AC_Output_kWh'], marker='o', linewidth=2, 
-                 markersize=8, color='orange', label='Monthly Output')
-    axes[1].fill_between(range(len(df)), df['AC_Output_kWh'], alpha=0.3, color='orange')
-    axes[1].set_xlabel('Month', fontsize=12)
-    axes[1].set_ylabel('AC Output (kWh)', fontsize=12)
-    axes[1].set_title('Solar Energy Production Trend', fontsize=14, fontweight='bold')
-    axes[1].grid(True, alpha=0.3)
-    axes[1].legend()
-    
-    plt.tight_layout()
-    plt.savefig('nrel_solar_data.png', dpi=300, bbox_inches='tight')
-    print("\nVisualization saved as 'nrel_solar_data.png'")
-    plt.show()
-    
-    
-else:
-    print(f"Error fetching data: {response.status_code}")
-    print(response.text)
+    # Check the structure of the response to extract data
+    print("Response Keys:", data.keys())
+
+    # Extract data from the 'value' key (assuming the list is under 'value')
+    if 'value' in data:
+        dataset = data['value']
+
+        # Print a sample of the data to inspect its structure
+        print("Sample of Data:", dataset[:5])
+
+        # Create a DataFrame with dummy categories as index
+        df = pd.DataFrame(dataset, columns=['Value'])
+        df['Category'] = [f'Category {i+1}' for i in range(len(df))]
+
+        # Print the first few rows to verify the structure
+        print(df.head())
+
+        # Visualization: Plot a bar chart of the data
+        plt.figure(figsize=(10, 6))
+        plt.bar(df['Category'], df['Value'], color='skyblue', edgecolor='blue')
+        plt.title('Data Visualization', fontsize=16)
+        plt.xlabel('Category', fontsize=12)
+        plt.ylabel('Value', fontsize=12)
+        plt.xticks(rotation=45, ha='right')
+        plt.tight_layout()
+        plt.show()
+
+    else:
+        print("No 'value' key found in the response.")
+
+except requests.exceptions.RequestException as e:
+    print(f"Request failed: {e}")
+
+except ValueError as e:
+    print("Failed to decode JSON.")
+    print(response.text[:500])  # Print the response text for debugging
+
+except Exception as e:
+    print(f"Unexpected error: {e}")
