@@ -1,0 +1,11 @@
+MONGO_HOST=mongodb-container
+MONGO_PORT=27017
+MONGO_DB=welding_db
+MONGO_COLLECTION=welding_data
+
+
+MONGO_HOST=mongodb-container
+MONGO_USER=admin
+MONGO_PASS=password123
+MONGO_DB=welding_db
+MONGO_COLLECTION=welding_data
