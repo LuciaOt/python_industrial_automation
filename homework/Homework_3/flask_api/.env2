@@ -1,0 +1,4 @@
+MONGO_HOST=mongodb-container
+MONGO_PORT=27017
+MONGO_DB=welding_db
+MONGO_COLLECTION=welding_data
