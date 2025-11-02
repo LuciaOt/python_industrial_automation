@@ -10,6 +10,7 @@ venv/
 
 # Environment variables
 .env
+.env2
 
 # OS-specific files
 .DS_Store
