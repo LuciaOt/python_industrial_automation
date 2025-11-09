@@ -1,12 +1,10 @@
 ---
 
-# Welding Data ETL Project
-
 This project creates **3 Docker containers** that work together to extract, store, and serve welding data.
 
 ## Quickstart
 
-1. **Create a `.env` file** (do **not** commit this file) with the following variables:
+1. **Create a `.env` file** (I did not commit this file) with the following variables:
 
 ```
 MONGO_HOST=
@@ -18,7 +16,7 @@ MONGO_COLLECTION=
 2. **Build and start the containers** from the folder containing `docker-compose.yml`:
 
 ```bash
-docker-compose up -d
+docker-compose up -build
 ```
 
 3. **Inspect the Docker network** if needed:
@@ -35,7 +33,7 @@ docker exec -it mongodb-container mongosh -u admin -p {password} --authenticatio
 
 > Replace `{password}` with your `.env` value.
 
-Once in the MongoDB shell, you can run:
+Once in the MongoDB shell, you can run (based on what you want to see):
 
 ```javascript
 use welding_db
