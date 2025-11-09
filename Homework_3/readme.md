@@ -36,7 +36,12 @@ exit
 
 
 
+Flask api 
+wild get the data from db. 
+checl them from 
+curl http://localhost:5000/
 
+get the data from welding db 
 
 
 

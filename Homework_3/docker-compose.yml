@@ -32,6 +32,26 @@ services:
       - mongodb
     restart: on-failure
 
+  flask-api:
+    build:
+      context: ./flask_api
+      dockerfile: Dockerfile
+    container_name: flask-api-container
+    environment:
+      MONGO_HOST: ${MONGO_HOST}
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASS: ${MONGO_PASS}
+      MONGO_DB: ${MONGO_DB}
+      MONGO_COLLECTION: ${MONGO_COLLECTION}
+    ports:
+      - "5000:5000"
+    networks:
+      - my-etl-network
+    depends_on:
+      - mongodb
+      - python-etl
+    restart: unless-stopped
+
 volumes:
   mongo_data:
 
