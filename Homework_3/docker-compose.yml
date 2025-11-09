@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: ${MONGO_HOST}
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
+      MONGO_INITDB_DATABASE: ${MONGO_DB}
+    networks:
+      - my-etl-network
+    volumes:
+      - mongo_data:/data/db
+
+  python-etl:
+    build:
+      context: ./python_container
+      dockerfile: Dockerfile
+    container_name: python-etl-container
+    environment:
+      MONGO_HOST: ${MONGO_HOST}
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASS: ${MONGO_PASS}
+      MONGO_DB: ${MONGO_DB}
+      MONGO_COLLECTION: ${MONGO_COLLECTION}
+    networks:
+      - my-etl-network
+    depends_on:
+      - mongodb
+    restart: on-failure
+
+volumes:
+  mongo_data:
+
+networks:
+  my-etl-network:
+    driver: bridge
+    name: my-etl-network

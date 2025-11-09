@@ -13,3 +13,5 @@ asyncua
 dash_bootstrap_components
 dash
 pymongo==4.15.3
+
+

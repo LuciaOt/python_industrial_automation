@@ -40,7 +40,7 @@ collection = db[MONGO_COLLECTION]
 # -----------------------------
 # Load CSV and transform
 # -----------------------------
-csv_path = "datasets/V1.1.csv"  # relative path
+csv_path = "datasets/V1.1.csv"
 try:
     df = pd.read_csv(csv_path)
     print(f"Loaded CSV with {len(df)} rows")
@@ -48,7 +48,6 @@ except Exception as e:
     print(f"Failed to read CSV: {e}")
     sys.exit(1)
 
-# Example transformation: strip whitespace from column names
 df.columns = df.columns.str.strip()
 
 # -----------------------------
