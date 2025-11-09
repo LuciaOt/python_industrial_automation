@@ -1,76 +1,42 @@
-This project creates 3 Docker containers that work together:
+# Welding Data ETL Project
 
-I created docker network my-etl-netwrok
-Credentials are stored in the .env file that i have not commited to git. I stored there MONGO_HOST, MONGO_PORT, MONGO_DB and MONGO_COLLECTION
+This project creates **3 Docker containers** that work together to extract, store, and serve welding data.
 
-docker-compose up -d (from the folder where docker-compose.yml is)
+## Quickstart
 
-<!-- to create network - docker network create my-first-network -->
-to inspect my network - docker network inspect my-etl-network
+1. Create a `.env` file with the following variables (do not commit this file):
+   MONGO_HOST=
+   MONGO_PORT=
+   MONGO_DB=
+   MONGO_COLLECTION=
 
+2. Build and start the containers from the folder containing `docker-compose.yml`:
+   docker-compose up -d
 
+3. Inspect the Docker network if needed:
+   docker network inspect my-etl-network
 
+4. Access MongoDB data:
+   docker exec -it mongodb-container mongosh -u admin -p {password} --authenticationDatabase admin
+   (Replace `{password}` with your `.env` value.) Then in the shell (depending on what you want to see):
+   use welding_db
+   show collections
+   db.welding_data.find().limit(5).pretty()
+   db.welding_data.findOne()
+   db.welding_data.countDocuments()
+   exit
 
-MongoDB Container - Database to store data
-Python Container - Reads CSV files and stores data in MongoDB
-Flask Container - Web API to retrieve and display stored data
+5. Access the Flask API:
+   curl [http://localhost:5000/](http://localhost:5000/)
+   This returns welding data as a Pandas table.
 
-All containers are connected via a Docker network 
+## Docker Network
 
-I also added VS Code MongoDB extension setup to my vsc to be able to check what is in the database in more friendly way. 
+* A custom Docker network `my-etl-network` connects all containers.
+* The project includes three containers:
 
+  * **MongoDB Container** – stores the data
+  * **Python ETL Container** – reads CSV files and inserts data into MongoDB
+  * **Flask API Container** – serves data via a web API
 
-
-To check the data in the mongodb from python-transformer in powershell, run:
-docker exec -it mongodb-container mongosh -u admin -p {password} --authenticationDatabase admin    
-(you can use mongosh - MongoDB shell. Add password from the .env to instead of {password})
-use welding_db
-show collections
-db.welding_data.find().limit(5).pretty()
-db.welding_data.findOne()
-db.welding_data.countDocuments()
-.... 
-exit
-
-
-
-
-
-Flask api 
-wild get the data from db. 
-checl them from 
-curl http://localhost:5000/
-
-get the data from welding db 
-
-
-
-
-
-Run Python container to transform data
-docker run --rm --network my-first-network --env-file .env python-transformer 
-docker network inspect only shows currently running containers attached to that network. Once the Python container exits and is removed, it disappears from the network list.
-
-
-
-
-
-
-
-
-
-
-After refresh of the connection I can see the data in mongodb vsc extension welding_db is added with welding data in json format 
-
-
-
-FLASH
-
-docker build -t flask-welding-api .
-
-docker run -d `
-  --name flask-api `
-  --network my-first-network 
-  --env-file .env `
-  -p 5000:5000 `
-  flask-welding-api
+VS Code MongoDB extension can also be used to view and explore the database in a user-friendly way.
