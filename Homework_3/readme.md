@@ -7,10 +7,12 @@ This project creates **3 Docker containers** that work together to extract, stor
 1. **Create a `.env` file** (I did not commit this file) with the following variables:
 
 ```
-MONGO_HOST=
-MONGO_PORT=
-MONGO_DB=
-MONGO_COLLECTION=
+MONGO_HOST=container_name
+MONGO_USER=user_name
+MONGO_PASS=your_password
+MONGO_DB=database_name
+MONGO_COLLECTION=data_name
+
 ```
 
 2. **Build and start the containers** from the folder containing `docker-compose.yml`:
